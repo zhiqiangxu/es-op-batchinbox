@@ -1,4 +1,5 @@
 {
     "solidity.formatter": "forge",
+    "solidity.evmVersion": "cancun",
     "solidity.defaultCompiler": "localNodeModule"
 }
