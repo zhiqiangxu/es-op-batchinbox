@@ -17,7 +17,9 @@ contract BatchInbox {
             if (h == bytes32(0)) break;
             if (payment == 0) payment = esStorageContract.upfrontPayment();
             esStorageContract.putBlob{value: payment}(h, i, 4096 * 32);
-            i++;
+            unchecked {
+                i++;
+            }
         } while (true);
     }
 
