@@ -11,8 +11,20 @@ contract BatchInboxTest is Test {
         batchInbox = new BatchInbox(0x804C520d3c084C805E37A35E90057Ac32831F96f);
     }
 
-    function test_Increment() public {
-        
-    }
+    function testDepositWithdrawOK() public {
+        // Give the test contract some ether
+        vm.deal(address(this), 1000 ether);
 
+        address target = address(1);
+        uint256 balanceBefore = target.balance;
+        assertEq(batchInbox.balances(target), 0);
+        batchInbox.deposit{value: 1 ether}(target);
+        assertEq(batchInbox.balances(target), 1 ether);
+
+        vm.prank(target);
+        batchInbox.withdraw(target, 1 ether);
+        uint256 balanceAfter = target.balance;
+
+        assertEq(balanceBefore + 1 ether, balanceAfter);
+    }
 }
